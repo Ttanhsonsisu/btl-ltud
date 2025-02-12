@@ -25,6 +25,9 @@ class PredictionResponse(BaseModel):
     confidence: float
     analysis: list
 
+class DependencyResponse(BaseModel):
+    nodes: list
+    links: list
 # hàm phân tích câu
 # Hàm phân tích ngữ nghĩa
 def analyze_sentence(text):
@@ -90,6 +93,21 @@ async def predict_endpoint(request: TextRequest):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
+@app.post("/parse", response_model=DependencyResponse)
+async def predict_endpoint(request: TextRequest):
+    try:
+        # Phân tích câu bằng spaCy
+        doc = nlp(request.text)
+
+        # Tạo dữ liệu nodes và links
+        nodes = [{"id": token.text, "lemma": token.lemma_, "pos": token.pos_} for token in doc]
+        links = [{"source": token.head.text, "target": token.text, "dependency": token.dep_} for token in doc if token.dep_ != "ROOT"]
+
+        # Trả về dữ liệu dưới dạng JSON
+        return {"nodes": nodes, "links": links}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+        
 # Chạy API
 if __name__ == "__main__":
     import uvicorn

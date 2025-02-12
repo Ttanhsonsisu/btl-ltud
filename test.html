@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Label Display Box</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #f4f4f9;
+    }
+    .container {
+      text-align: center;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    input[type="number"] {
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      width: 200px;
+    }
+    .label-box {
+      margin-top: 20px;
+      padding: 15px;
+      font-size: 18px;
+      font-weight: bold;
+      color: white;
+      border-radius: 5px;
+      display: inline-block;
+    }
+    .negative { background-color: #ff4d4d; } /* Red for Negative */
+    .positive { background-color: #4caf50; } /* Green for Positive */
+    .neutral { background-color: #ffeb3b; color: black; } /* Yellow for Neutral */
+    .irrelevant { background-color: #9e9e9e; } /* Gray for Irrelevant */
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Label Display Box</h1>
+    <p>Enter a number (0-3):</p>
+    <input type="number" id="inputNumber" min="0" max="3" placeholder="0, 1, 2, or 3">
+    <div id="labelDisplay" class="label-box">Enter a number to see the label</div>
+  </div>
+
+  <script>
+    // Lấy các phần tử HTML
+    const inputNumber = document.getElementById('inputNumber');
+    const labelDisplay = document.getElementById('labelDisplay');
+
+    // Định nghĩa các label tương ứng
+    const labels = {
+      0: { text: "Negative", className: "negative" },
+      1: { text: "Positive", className: "positive" },
+      2: { text: "Neutral", className: "neutral" },
+      3: { text: "Irrelevant", className: "irrelevant" }
+    };
+
+    // Xử lý sự kiện khi người dùng nhập số
+    inputNumber.addEventListener('input', function() {
+      const value = parseInt(inputNumber.value); // Lấy giá trị nhập vào
+      if (value >= 0 && value <= 3) {
+        // Hiển thị label và màu sắc tương ứng
+        labelDisplay.textContent = labels[value].text;
+        labelDisplay.className = `label-box ${labels[value].className}`;
+      } else {
+        // Nếu giá trị không hợp lệ
+        labelDisplay.textContent = "Invalid input! Enter 0, 1, 2, or 3.";
+        labelDisplay.className = "label-box";
+      }
+    });
+  </script>
+</body>
+</html>
