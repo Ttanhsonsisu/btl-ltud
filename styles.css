@@ -158,15 +158,15 @@ body {
   .node {
     font-size: 14px;
     font-weight: bold;
-    fill: #69b3a2;
+    fill: rgba(255, 99, 132, 1);
   }
   .link {
-    stroke: #d908b3;
-    stroke-width: 2px;
+    stroke: rgba(54, 162, 235, 0.4);
+    stroke-width: 1px;
   }
   .label {
     font-size: 12px;
-    fill: #ffffff;
+    fill: #b0b0b0;
   }
 
   /* result -lable positive negative .. */
